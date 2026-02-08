@@ -3,11 +3,11 @@
 (eww, it's X11)
 
 ## Requirements
-In order to build dwm you need the Xlib header files.
+In order to build dwm you need the Xlib header files and for this version, you need nerd fonts.
 
 Void
 ```bash
-sudo xbps-install -S base-devel xorg xinit libX11-devel libXft-devel libXinerama-devel libXrandr-devel
+sudo xbps-install -S base-devel xorg xinit libX11-devel libXft-devel libXinerama-devel libXrandr-devel nerd-fonts
 ```
 
 ## Installation
