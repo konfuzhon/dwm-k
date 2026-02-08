@@ -42,7 +42,7 @@ do
 sleep 1
 done &
 exec dwm
-```bash
+```
 
 ## Configuration
 The configuration of dwm is done by creating a custom config.h
