@@ -1,5 +1,7 @@
 /* See LICENSE file for copyright and license details. */
 
+#include <X11/XF86keysym.h>
+
 /* appearance */
 static const unsigned int borderpx  = 4;        /* border pixel of windows */
 static const unsigned int gappx     = 4;        /* gap pixel between windows */
@@ -16,24 +18,21 @@ static const char dmenufont[]       = "EnvyCodeR Nerd Font Mono:size=10";
 static const char col_gray1[]       = "#4c566a";
 static const char col_white[]       = "#eceff4";
 static const char col_gray3[]       = "#2e3440";
-static const char col_cyan[]        = "#81a1c1";
+static const char col_blue[]	    = "#81a1c1";
+static const char col_green[]       = "#a3be8c";
+static const char col_orange[]      = "#d08770";
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
 	[SchemeNorm] = { col_white, col_gray1, col_gray1 },
-	[SchemeSel]  = { col_gray3, col_cyan,  col_cyan  },
+	[SchemeSel]  = { col_gray3, col_orange, col_green  },
 };
 
 /* tagging */
 static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 
 static const Rule rules[] = {
-	/* xprop(1):
-	 *	WM_CLASS(STRING) = instance, class
-	 *	WM_NAME(STRING) = title
-	 */
-	/* class      instance    title       tags mask     isfloating   monitor */
-	{ "Gimp",     NULL,       NULL,       0,            1,           -1 },
-	{ "Firefox",  NULL,       NULL,       1 << 8,       0,           -1 },
+	/* class	instance	title	tags mask	isfloating	monitor */
+	{ NULL,		NULL,		NULL,	0,		0,		-1 },
 };
 
 /* layout(s) */
@@ -66,6 +65,9 @@ static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() 
 static const char *dmenucmd[] = { "dmenu_run"};
 static const char *termcmd[]  = { "st", NULL };
 static const char *lockcmd[] = { "slock" };
+static const char *upvol[] = { "wpctl", "set-volume", "@DEFAULT_AUDIO_SINK@", "5%+", NULL };
+static const char *downvol[] = { "wpctl", "set-volume", "@DEFAULT_AUDIO_SINK@", "5%-", NULL };
+static const char *mutevol[] = { "wpctl", "set-mute", "@DEFAULT_AUDIO_SINK@", "toggle", NULL};
 
 
 static const Key keys[] = {
@@ -119,8 +121,13 @@ static const Key keys[] = {
 	TAGKEYS(                        XK_7,                      6)
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
-	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
+	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} }, 
+	{ 0, XF86XK_AudioRaiseVolume, spawn, {.v = upvol } },
+	{ 0, XF86XK_AudioLowerVolume, spawn, {.v = downvol } },
+	{ 0, XF86XK_AudioMute,	      spawn, {.v = mutevol } },
 };
+
+
 
 /* button definitions */
 /* click can be ClkTagBar, ClkLtSymbol, ClkStatusText, ClkWinTitle, ClkClientWin, or ClkRootWin */
